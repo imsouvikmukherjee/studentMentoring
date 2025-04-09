@@ -5,14 +5,27 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MentoringController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('login');
 // });
 
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if (Auth::check()) {
+        $usertype = Auth::user()->usertype;
+        if ($usertype === 'Student') {
+            return redirect()->route('user.dashboard');
+        } elseif (in_array($usertype, ['Admin', 'Mentor', 'Superadmin'])) {
+            return redirect()->route('admin_dashboard');
+        }
+    }
+    return redirect('/login');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/', [AuthenticatedSessionController::class, 'create'])
