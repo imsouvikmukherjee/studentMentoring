@@ -46,12 +46,12 @@
 
 <!-- Welcome Message -->
 @if(session()->has('login_success'))
-<div class="alert border-0 border-start border-5 border-success alert-dismissible fade show py-2 welcome-alert">
+<div class="alert bg-success alert-dismissible fade show py-2 welcome-alert">
     <div class="d-flex align-items-center">
-        <div class="font-35 text-success"><i class="bx bx-info-circle"></i></div>
+        <div class="font-35 text-white"><i class="bx bx-check-circle"></i></div>
         <div class="ms-3">
-            <h6 class="mb-0 text-success">Welcome back, {{ Auth::user()->name }}!</h6>
-            <div>We're glad to see you again.</div>
+            <h6 class="mb-0 text-white">Welcome back, {{ Auth::user()->name }}!</h6>
+            <div class="text-white">We're glad to see you again.</div>
         </div>
     </div>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -149,8 +149,7 @@
                 <p class="text-muted">Your personal and academic information</p>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('user.edit.profile') }}" class="btn btn-primary me-2"><i class="bi bi-pencil-square"></i> Edit Profile</a>
-                <a href="{{ route('user.change.requests') }}" class="btn btn-outline-primary"><i class="bi bi-clock-history"></i> Change Requests</a>
+                <a href="{{ route('user.edit.profile') }}" class="btn btn-outline-primary"><i class="bi bi-clock-history"></i> Change Requests</a>
             </div>
         </div>
 
@@ -173,13 +172,11 @@
                             <h6 class="mb-1">{{ $student->name ?? 'Student' }}</h6>
                             <p class="text-muted small mb-0">{{ $student->email ?? 'Email not available' }}</p>
                             <p class="text-muted small mb-0"><i class="bi bi-phone me-1"></i>{{ $student->contact ?? 'Contact not available' }}</p>
-                            {{-- @if($student->picture_changes_left != null)
                             <div class="mt-2 small">
                                 <span class="badge bg-light text-dark">
-                                    <i class="bi bi-camera me-1"></i>{{ $student->picture_changes_left }} {{ $student->picture_changes_left == 1 ? 'change' : 'changes' }} left
+                                    <i class="bi bi-camera me-1"></i>{{ $student->picture_changes_left ?? 3 }} {{ ($student->picture_changes_left ?? 3) == 1 ? 'change' : 'changes' }} left
                                 </span>
                             </div>
-                            @endif --}}
                         </div>
                     </div>
                 </div>

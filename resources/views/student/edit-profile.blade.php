@@ -55,46 +55,53 @@
         </div>
         @endif
 
-        <form action="{{ route('user.update.profile') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="row mb-4">
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="mb-0">Profile Picture</h6>
-                                </div>
-                        <div class="card-body text-center">
-                            <div class="profile-pic-wrapper mb-3">
-                                <img src="{{ $student && isset($student->profile_picture) && $student->profile_picture ? url('storage/profile-pictures/' . $student->profile_picture) : url('admin-assets/images/avatars/avatar-2.png') }}"
-                                    class="img-fluid rounded-circle profile-pic"
-                                    width="150" height="150"
-                                    alt="Profile Picture">
-                            </div>
-
-                            @if($pendingRequest)
-                                <div class="alert alert-warning py-2 small">
-                                    Please wait for your pending change request to be processed.
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0">Change Requests History</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <!-- Change Requests History -->
+                        <div class="change-requests-history mt-4">
+                            @if($changeRequests && $changeRequests->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-sm table-borderless mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($changeRequests as $request)
+                                        <tr>
+                                            <td class="text-muted small">{{ $request->created_at->format('d M Y') }}</td>
+                                            <td>
+                                                @if($request->status == 'pending')
+                                                <span class="badge bg-warning">Pending</span>
+                                                @elseif($request->status == 'approved')
+                                                <span class="badge bg-success">Approved</span>
+                                                @else
+                                                <span class="badge bg-danger">Rejected</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                             @else
-                            <div class="mb-3">
-                                    <label for="profile_picture" class="form-label">Change Profile Picture</label>
-                                    <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
-                                    <div class="mt-2">
-                                        {{-- <small class="text-muted">You can change your profile picture {{ $student->picture_changes_left ?? 3 }} more {{ $student->picture_changes_left == 1 ? 'time' : 'times' }}.</small> --}}
-                            </div>
-                            </div>
+                            <p class="text-muted small mb-0">No change requests found.</p>
                             @endif
-
-                            <div class="user-info mt-3">
-                                <h6 class="mb-1">{{ $student->name ?? 'Student' }}</h6>
-                                <p class="text-muted small mb-0">{{ $student->email ?? 'Email not available' }}</p>
-                                <p class="text-muted mb-0"><i class="bi bi-phone me-1"></i> {{ $student->contact ?? 'Contact not available' }}</p>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-9">
+            <div class="col-lg-8">
+                <form action="{{ route('user.update.profile') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <!-- Personal Information -->
                     <div class="card mb-3">
                         <div class="card-header bg-light">
@@ -138,12 +145,12 @@
                                     </select>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="father_name" class="form-label">Father's Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="father_name" name="father_name" value="{{ old('father_name', $student->father_name ?? '') }}" required {{ $pendingRequest ? 'disabled' : '' }}>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label for="mother_name" class="form-label">Mother's Name <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="mother_name" name="mother_name" value="{{ old('mother_name', $student->mother_name ?? '') }}" required {{ $pendingRequest ? 'disabled' : '' }}>
                                 </div>
@@ -186,11 +193,11 @@
                                 <div class="col-md-6">
                                     <label for="student_address" class="form-label">Address <span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="student_address" name="student_address" rows="2" required {{ $pendingRequest ? 'disabled' : '' }}>{{ old('student_address', $student->student_address ?? '') }}</textarea>
-                            </div>
+                                </div>
 
                                 <div class="col-md-6">
-                                <label for="alternate_mobile" class="form-label">Alternate Mobile Number</label>
-                                <input type="text" class="form-control" id="alternate_mobile" name="alternate_mobile" value="{{ old('alternate_mobile', $student->alternate_mobile ?? '') }}" {{ $pendingRequest ? 'disabled' : '' }}>
+                                    <label for="alternate_mobile" class="form-label">Alternate Mobile Number</label>
+                                    <input type="text" class="form-control" id="alternate_mobile" name="alternate_mobile" value="{{ old('alternate_mobile', $student->alternate_mobile ?? '') }}" {{ $pendingRequest ? 'disabled' : '' }}>
                                 </div>
 
                                 <div class="col-md-4">
@@ -206,17 +213,17 @@
                                 <div class="col-md-4">
                                     <label for="pin" class="form-label">PIN Code <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="pin" name="pin" value="{{ old('pin', $student->pin ?? '') }}" required {{ $pendingRequest ? 'disabled' : '' }}>
-                            </div>
+                                </div>
 
                                 <div class="col-md-6">
-                                <label class="form-label">Primary Mobile Number</label>
-                                <input type="text" class="form-control" value="{{ $student->contact ?? '' }}" readonly disabled>
+                                    <label class="form-label">Primary Mobile Number</label>
+                                    <input type="text" class="form-control" value="{{ $student->contact ?? '' }}" readonly disabled>
                                     <small class="text-muted">Primary contact requires administrator approval for changes.</small>
-                            </div>
+                                </div>
 
                                 <div class="col-md-6">
-                                <label class="form-label">Email Address</label>
-                                <input type="email" class="form-control" value="{{ $student->email ?? '' }}" readonly disabled>
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" value="{{ $student->email ?? '' }}" readonly disabled>
                                     <small class="text-muted">Email requires administrator approval for changes.</small>
                                 </div>
                             </div>
@@ -302,59 +309,80 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="alert border-0 border-start border-5 border-info py-2">
-                        <div class="d-flex align-items-center">
-                            <div class="font-35 text-info"><i class="bi bi-info-circle"></i></div>
-                            <div class="ms-3">
-                                <h6 class="mb-0 text-info">Important Information</h6>
-                                <ul class="mb-0">
-                                    <li>All changes to your profile information require approval from your mentor.</li>
-                                    <li>Your profile picture can be changed up to 3 times without approval.</li>
-                                    <li>You will be notified when your change request is approved or rejected.</li>
-                                    <li>For emergency changes, please contact the administrator directly.</li>
-                                </ul>
-                            </div>
+                    <!-- Profile Picture Change Section -->
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0"><i class="bi bi-person-circle me-2"></i>Profile Picture</h6>
+                        </div>
+                        <div class="card-body text-center">
+                            @if($pendingRequest)
+                                <div class="alert alert-warning py-2 small">
+                                    Please wait for your pending change request to be processed.
+                                </div>
+                            @else
+                                <div class="mb-3">
+                                    <label for="profile_picture" class="form-label">Change Profile Picture</label>
+                                    <input type="file" class="form-control" id="profile_picture" name="profile_picture" accept="image/*">
+                                    <div class="mt-6">
+                                        <small class="text-muted">You can change your profile picture {{ $student->picture_changes_left ?? 3 }} more {{ ($student->picture_changes_left ?? 3) == 1 ? 'time' : 'times' }}.</small>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="row mt-3">
-                <div class="col-12 text-end">
-                    <button type="submit" class="btn btn-primary px-4" {{ $pendingRequest ? 'disabled' : '' }}><i class="bi bi-save"></i> Submit Change Request</button>
-                    <a href="{{ route('user.dashboard') }}" class="btn btn-secondary px-4 ms-2"><i class="bi bi-x-circle"></i> Cancel</a>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert border-0 border-start border-5 border-info py-2">
+                <div class="d-flex align-items-center">
+                    <div class="font-35 text-info"><i class="bi bi-info-circle"></i></div>
+                    <div class="ms-3">
+                        <h6 class="mb-0 text-info">Important Information</h6>
+                        <ul class="mb-0">
+                            <li>All changes to your profile information require approval from your mentor.</li>
+                            <li>Your profile picture can be changed up to 3 times without approval.</li>
+                            <li>You will be notified when your change request is approved or rejected.</li>
+                            <li>For emergency changes, please contact the administrator directly.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary px-4" {{ $pendingRequest ? 'disabled' : '' }}><i class="bi bi-save"></i> Submit Change Request</button>
+            <a href="{{ route('user.dashboard') }}" class="btn btn-secondary px-4 ms-2"><i class="bi bi-x-circle"></i> Cancel</a>
+        </div>
     </div>
 </div>
 
 <style>
-.profile-pic-wrapper {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-    overflow: hidden;
-    border-radius: 50%;
-    background-color: #f8f9fa;
-    border: 4px solid #e9ecef;
-}
+    .profile-pic-wrapper {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        border: 4px solid #e9ecef;
+    }
 
-.profile-pic {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
+    .profile-pic {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
 
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid rgba(0,0,0,.125);
-}
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid rgba(0, 0, 0, .125);
+    }
 </style>
 @endsection
