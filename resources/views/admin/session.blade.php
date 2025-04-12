@@ -5,18 +5,18 @@
     <div class="page-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Departments</div>
+            <div class="breadcrumb-title pe-3">Sessions</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="{{route('admin_dashboard')}}" style="color: #00a8ff;"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Departments</li>
+                        <li class="breadcrumb-item active" aria-current="page">Sessions</li>
                     </ol>
                 </nav>
             </div>
             <div class="ms-auto">
-                <a href="{{ route('admin.departments.add') }}" class="btn btn-primary">Add Department</a>
+                <a href="{{ route('admin.sessions.add') }}" class="btn btn-primary">Add Session</a>
             </div>
         </div>
         <!--end breadcrumb-->
@@ -42,62 +42,72 @@
                         <thead class="table-primary">
                             <tr>
                                 <th>ID</th>
-                                <th>Session</th>
-                                <th>Department Name</th>
+                                <th>Session Name</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if($departments->isEmpty())
+                            @if($sessions->isEmpty())
                                 <tr>
-                                    <td colspan="4" class="text-center">No departments found</td>
+                                    <td colspan="4" class="text-center">No sessions found</td>
                                 </tr>
                             @else
-                                @foreach($departments as $department)
+                                @foreach($sessions as $session)
                                 <tr>
-                                    <td>{{ $department->id }}</td>
-                                    <td>{{ $department->academicSession->name }}</td>
-                                    <td>{{ $department->name }}</td>
+                                    <td>{{ $session->id }}</td>
+                                    <td>{{ $session->name }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal{{ $department->id }}">
+                                        @if($session->is_active)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-danger">Inactive</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editSessionModal{{ $session->id }}">
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
-                                        <form action="{{ route('admin.departments.destroy', $department->id) }}" method="POST" style="display: inline-block;">
+                                        <form action="{{ route('admin.sessions.destroy', $session->id) }}" method="POST" style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this department?')">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this session?')">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
                                 
-                                <!-- Edit Modal for Department -->
-                                <div class="modal fade" id="editDepartmentModal{{ $department->id }}" tabindex="-1" aria-hidden="true">
+                                <!-- Edit Modal for Session -->
+                                <div class="modal fade" id="editSessionModal{{ $session->id }}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">Edit Department</h5>
+                                                <h5 class="modal-title">Edit Session</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route('admin.departments.update', $department->id) }}" method="POST">
+                                                <form action="{{ route('admin.sessions.update', $session->id) }}" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="mb-3">
-                                                        <label for="edit_dept_session_id{{ $department->id }}" class="form-label">Session</label>
-                                                        <select class="form-select" id="edit_dept_session_id{{ $department->id }}" name="academic_session_id" required>
-                                                            @foreach(\App\Models\AcademicSession::all() as $session)
-                                                            <option value="{{ $session->id }}" {{ $department->academic_session_id == $session->id ? 'selected' : '' }}>{{ $session->name }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <label for="edit_session_name{{ $session->id }}" class="form-label">Session Name</label>
+                                                        <input type="text" class="form-control" id="edit_session_name{{ $session->id }}" name="name" value="{{ $session->name }}" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="edit_department_name{{ $department->id }}" class="form-label">Department Name</label>
-                                                        <input type="text" class="form-control" id="edit_department_name{{ $department->id }}" name="name" value="{{ $department->name }}" required>
+                                                        <label for="edit_description{{ $session->id }}" class="form-label">Description</label>
+                                                        <textarea class="form-control" id="edit_description{{ $session->id }}" name="description" rows="3">{{ $session->description }}</textarea>
                                                     </div>
-                                                    <input type="hidden" name="department" value="{{ $department->id }}">
-                                                    <button type="submit" class="btn btn-primary">Update Department</button>
+                                                    <div class="mb-3">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="edit_is_active{{ $session->id }}" name="is_active" value="1" {{ $session->is_active ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="edit_is_active{{ $session->id }}">
+                                                                Active
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" name="academicSession" value="{{ $session->id }}">
+                                                    <button type="submit" class="btn btn-primary">Update Session</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -112,5 +122,4 @@
         </div>
     </div>
 </div>
-@endsection
-
+@endsection 

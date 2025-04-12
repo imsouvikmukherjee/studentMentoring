@@ -15,8 +15,6 @@
     <link href="{{url('admin-assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css')}}" rel="stylesheet" />
     <link href="{{url('admin-assets/plugins/metismenu/css/metisMenu.min.css')}}" rel="stylesheet" />
     <!-- loader-->
-    <link href="{{url('admin-assets/css/pace.min.css')}}" rel="stylesheet" />
-    <script src="{{url('admin-assets/js/pace.min.js')}}"></script>
     <!-- Bootstrap CSS -->
     <link href="{{url('admin-assets/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -130,17 +128,15 @@
                         <div class="menu-title">Academic Details</div>
                     </a>
                     <ul>
-                        <li> <a href="{{route('department')}}"><i class="bx bx-right-arrow-alt"></i>Department</a>
+                        <li> <a href="{{route('admin.sessions')}}"><i class="bx bx-right-arrow-alt"></i>Session</a>
                         </li>
-                        <!-- <li> <a href="ecommerce-products-details.html"><i class="bx bx-right-arrow-alt"></i>Semister</a> -->
-                </li>
-                <li> <a href="{{route('subject')}}"><i class="bx bx-right-arrow-alt"></i>Subject</a>
-                </li>
-                <li> <a href="{{route('assign.subjects')}}"><i class="bx bx-right-arrow-alt"></i>Assign Subjects</a>
-                </li>
-                <!-- <li> <a href="ecommerce-orders.html"><i class="bx bx-right-arrow-alt"></i>Orders</a> -->
-                </li>
-                </ul>
+                        <li> <a href="{{route('admin.departments')}}"><i class="bx bx-right-arrow-alt"></i>Department</a>
+                        </li>
+                        <li> <a href="{{route('admin.semesters')}}"><i class="bx bx-right-arrow-alt"></i>Semester</a>
+                        </li>
+                        <li> <a href="{{route('subject')}}"><i class="bx bx-right-arrow-alt"></i>Subject</a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>

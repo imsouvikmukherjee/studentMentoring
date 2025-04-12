@@ -2,104 +2,60 @@
 
 @section('main-container')
 <style>
-    .edit-section {
-        background: #fff;
-        border-radius: 0.5rem;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
+    .mentoring-card {
         box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        margin-bottom: 1.5rem;
+        border-radius: 0.5rem;
+    }
+    .nav-tabs .nav-link {
+        border: none;
+        color: #495057;
+        margin-right: 5px;
+        font-weight: 500;
+        padding: 10px 20px;
+    }
+    .nav-tabs .nav-link.active {
+        color: #0d6efd;
+        background-color: #fff;
+        border-bottom: 2px solid #0d6efd;
+    }
+    .main-tab-content {
+        background-color: #fff;
+        border-radius: 0 0 0.5rem 0.5rem;
+        padding: 1.5rem;
+    }
+    .form-label {
+        font-weight: 500;
+        color: #344767;
+    }
+    .table th {
+        font-weight: 600;
+        color: #344767;
+    }
+    .add-row-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    .remove-row-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        color: #dc3545;
+        background: none;
+        border: none;
+    }
+    .remove-row-btn:hover {
+        color: #bd2130;
     }
     .section-title {
         color: #344767;
         font-size: 1.1rem;
         font-weight: 600;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-    }
-    .section-title i {
-        margin-right: 0.75rem;
-        font-size: 1.2rem;
-        color: #0d6efd;
-    }
-    .form-floating {
         margin-bottom: 1rem;
-    }
-    .form-floating > label {
-        padding: 0.5rem 0.75rem;
-    }
-    .form-floating > .form-control {
-        padding: 0.5rem 0.75rem;
-        height: calc(3rem + 2px);
-    }
-    .achievement-form {
-        background: #f8f9fa;
-        border-radius: 0.5rem;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border: 1px solid #e9ecef;
-    }
-    .remove-achievement {
-        color: #dc3545;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .remove-achievement:hover {
-        transform: scale(1.1);
-    }
-    .add-more-btn {
-        background: #e9ecef;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        color: #344767;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.2s;
-    }
-    .add-more-btn:hover {
-        background: #dee2e6;
-        transform: translateY(-1px);
-    }
-    .grade-select {
-        width: 80px !important;
-    }
-    .subject-row {
-        background: #fff;
-        padding: 1rem;
-        border-radius: 0.375rem;
-        margin-bottom: 0.5rem;
-        border: 1px solid #e9ecef;
-    }
-    .save-btn {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        background: #0d6efd;
-        color: #fff;
-        border: none;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        z-index: 1000;
-        transition: all 0.3s;
-    }
-    .save-btn:hover {
-        background: #0b5ed7;
-        transform: translateY(-2px);
-    }
-    .semester-nav {
-        position: sticky;
-        top: 0;
-        background: #fff;
-        z-index: 1000;
-        padding: 1rem 0;
-        margin-bottom: 2rem;
+        padding-bottom: 0.5rem;
         border-bottom: 1px solid #e9ecef;
+    }
+    .table-input {
+        min-width: 80px;
     }
 </style>
 
@@ -109,385 +65,279 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="{{ route('user.dashboard') }}"><i class="bx bx-home-alt"></i></a></li>
-                <li class="breadcrumb-item"><a href="{{ route('user.mentoring') }}">Mentoring</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Details</li>
+                <li class="breadcrumb-item"><a href="{{ route('user.mentoring') }}">Mentoring Details</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Information</li>
             </ol>
         </nav>
     </div>
 </div>
 
-<form action="{{ route('user.mentoring.update') }}" method="POST" id="mentoringForm">
-    @csrf
-    <div class="semester-nav">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0">Semester <span id="currentSemester">1</span> Details</h4>
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-primary prev-sem" disabled><i class="bi bi-chevron-left"></i> Previous</button>
-                <button type="button" class="btn btn-outline-primary next-sem">Next <i class="bi bi-chevron-right"></i></button>
+<div class="card mentoring-card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h4 class="mb-1">Edit Mentoring Information</h4>
+                <p class="text-muted mb-0">Update your academic journey information</p>
             </div>
         </div>
-        <div class="progress" style="height: 6px;">
-            <div class="progress-bar" role="progressbar" style="width: 12.5%;" aria-valuenow="12.5" aria-valuemin="0" aria-valuemax="100"></div>
+
+        <form action="{{ route('user.mentoring.update') }}" method="POST">
+            @csrf
+            <!-- Main Tabs Navigation -->
+            <ul class="nav nav-tabs mb-0" id="mainTabs" role="tablist">
+                @for($i = 1; $i <= 8; $i++)
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link {{ $i == 1 ? 'active' : '' }}" id="sem{{ $i }}-tab" data-bs-toggle="tab" 
+                                data-bs-target="#sem{{ $i }}" type="button" role="tab">
+                            <i class="bi bi-{{ $i }}-circle me-1"></i> Semester {{ $i }}
+                        </button>
+                    </li>
+                @endfor
+            </ul>
+
+            <div class="main-tab-content">
+                <div class="tab-content" id="mainTabsContent">
+                    @for($i = 1; $i <= 8; $i++)
+                        <div class="tab-pane fade {{ $i == 1 ? 'show active' : '' }}" id="sem{{ $i }}" role="tabpanel">
+                            <!-- Academic Development Section -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0"><i class="bi bi-journal-check me-2"></i>Academic Development</h5>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Theory Exams Section -->
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="section-title mb-0">Theory Exams</h6>
+                                            <button type="button" class="btn btn-primary btn-sm add-row-btn" 
+                                                    onclick="addTheoryRow({{ $i }})">
+                                                <i class="bi bi-plus-circle me-1"></i>Add Subject
+                                            </button>
+                                        </div>
+                                        <div class="table-responsive mt-3">
+                                            <table class="table table-bordered" id="theory-table-{{ $i }}">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Subject</th>
+                                                        <th>Paper Code</th>
+                                                        <th>CA1 (20)</th>
+                                                        <th>CA2 (20)</th>
+                                                        <th>CA3 (20)</th>
+                                                        <th>CA4 (20)</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control" name="theory[{{ $i }}][subject][]"></td>
+                                                        <td><input type="text" class="form-control" name="theory[{{ $i }}][code][]"></td>
+                                                        <td><input type="number" class="form-control table-input" name="theory[{{ $i }}][ca1][]" min="0" max="20"></td>
+                                                        <td><input type="number" class="form-control table-input" name="theory[{{ $i }}][ca2][]" min="0" max="20"></td>
+                                                        <td><input type="number" class="form-control table-input" name="theory[{{ $i }}][ca3][]" min="0" max="20"></td>
+                                                        <td><input type="number" class="form-control table-input" name="theory[{{ $i }}][ca4][]" min="0" max="20"></td>
+                                                        <td>
+                                                            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
         </div>
     </div>
 
-    @for($sem = 1; $sem <= 8; $sem++)
-    <div class="semester-section" data-semester="{{ $sem }}" style="{{ $sem > 1 ? 'display: none;' : '' }}">
-        <!-- Academic Performance -->
-        <div class="edit-section">
-            <h5 class="section-title"><i class="bi bi-journal-text"></i>Academic Performance</h5>
-            <div class="subject-container">
-                @foreach($semesterSubjects[$sem] ?? [] as $index => $subject)
-                <div class="subject-row">
-                    <div class="row align-items-center">
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="subject_{{ $sem }}_{{ $index }}" name="semesters[{{ $sem }}][subjects][{{ $index }}][name]" value="{{ $subject->name }}" placeholder="Subject Name">
-                                <label>Subject Name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][subjects][{{ $index }}][code]" value="{{ $subject->code }}" placeholder="Subject Code">
-                                <label>Code</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <select class="form-select grade-select" name="semesters[{{ $sem }}][subjects][{{ $index }}][grade]">
-                                    @foreach(['O', 'E', 'A', 'B', 'C', 'D', 'F'] as $grade)
-                                        <option value="{{ $grade }}" {{ $subject->grade == $grade ? 'selected' : '' }}>{{ $grade }}</option>
-                                    @endforeach
-                                </select>
-                                <label>Grade</label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][subjects][{{ $index }}][remarks]" value="{{ $subject->remarks }}" placeholder="Remarks">
-                                <label>Remarks</label>
-                            </div>
-                        </div>
-                        <div class="col-md-1 text-center">
-                            <i class="bi bi-trash remove-subject remove-achievement"></i>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            <button type="button" class="add-more-btn mt-2" data-type="subject" data-semester="{{ $sem }}">
-                <i class="bi bi-plus-circle"></i> Add Subject
+                                    <!-- Practical Exams Section -->
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="section-title mb-0">Practical Exams</h6>
+                                            <button type="button" class="btn btn-primary btn-sm add-row-btn" 
+                                                    onclick="addPracticalRow({{ $i }})">
+                                                <i class="bi bi-plus-circle me-1"></i>Add Practical
             </button>
         </div>
+                                        <div class="table-responsive mt-3">
+                                            <table class="table table-bordered" id="practical-table-{{ $i }}">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Practical</th>
+                                                        <th>Paper Code</th>
+                                                        <th>PCA1 (50)</th>
+                                                        <th>PCA2 (50)</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control" name="practical[{{ $i }}][subject][]"></td>
+                                                        <td><input type="text" class="form-control" name="practical[{{ $i }}][code][]"></td>
+                                                        <td><input type="number" class="form-control table-input" name="practical[{{ $i }}][pca1][]" min="0" max="50"></td>
+                                                        <td><input type="number" class="form-control table-input" name="practical[{{ $i }}][pca2][]" min="0" max="50"></td>
+                                                        <td>
+                                                            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                            </div>
+                        </div>
 
-        <!-- Certifications -->
-        <div class="edit-section">
-            <h5 class="section-title"><i class="bi bi-award"></i>Certifications</h5>
-            <div class="certifications-container">
-                @foreach($certifications[$sem] ?? [] as $index => $cert)
-                <div class="achievement-form">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][certifications][{{ $index }}][title]" value="{{ $cert->title }}" placeholder="Certificate Title">
-                                <label>Certificate Title</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][certifications][{{ $index }}][issuer]" value="{{ $cert->issuer }}" placeholder="Issuing Organization">
-                                <label>Issuing Organization</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <input type="date" class="form-control" name="semesters[{{ $sem }}][certifications][{{ $index }}][completion_date]" value="{{ $cert->completion_date }}">
-                                <label>Completion Date</label>
-                            </div>
-                        </div>
-                        <div class="col-md-1 d-flex align-items-center justify-content-center">
-                            <i class="bi bi-trash remove-achievement"></i>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            <button type="button" class="add-more-btn mt-2" data-type="certification" data-semester="{{ $sem }}">
-                <i class="bi bi-plus-circle"></i> Add Certification
+                                    <!-- Semester Marks Section -->
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="section-title mb-0">Semester Marks</h6>
+                                            <button type="button" class="btn btn-primary btn-sm add-row-btn" 
+                                                    onclick="addSemesterRow({{ $i }})">
+                                                <i class="bi bi-plus-circle me-1"></i>Add Subject
             </button>
         </div>
+                                        <div class="table-responsive mt-3">
+                                            <table class="table table-bordered" id="semester-table-{{ $i }}">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Subject Code</th>
+                                                        <th>Subjects Offered</th>
+                                                        <th>Letter Grade</th>
+                                                        <th>Points</th>
+                                                        <th>Credit</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control" name="semester[{{ $i }}][code][]"></td>
+                                                        <td><input type="text" class="form-control" name="semester[{{ $i }}][subject][]"></td>
+                                                        <td>
+                                                            <select class="form-select" name="semester[{{ $i }}][grade][]">
+                                                                <option value="">Select Grade</option>
+                                                                <option value="O">O</option>
+                                                                <option value="E">E</option>
+                                                                <option value="A">A</option>
+                                                                <option value="B">B</option>
+                                                                <option value="C">C</option>
+                                                                <option value="D">D</option>
+                                                                <option value="F">F</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="number" class="form-control table-input" name="semester[{{ $i }}][points][]" min="0" max="10"></td>
+                                                        <td><input type="number" class="form-control table-input" name="semester[{{ $i }}][credit][]" step="0.5" min="0"></td>
+                                                        <td>
+                                                            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                            </div>
+                        </div>
 
-        <!-- Workshops -->
-        <div class="edit-section">
-            <h5 class="section-title"><i class="bi bi-tools"></i>Workshops</h5>
-            <div class="workshops-container">
-                @foreach($workshops[$sem] ?? [] as $index => $workshop)
-                <div class="achievement-form">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][workshops][{{ $index }}][name]" value="{{ $workshop->name }}" placeholder="Workshop Name">
-                                <label>Workshop Name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][workshops][{{ $index }}][organizer]" value="{{ $workshop->organizer }}" placeholder="Organizer">
-                                <label>Organizer</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <input type="date" class="form-control" name="semesters[{{ $sem }}][workshops][{{ $index }}][date]" value="{{ $workshop->date }}">
-                                <label>Date</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][workshops][{{ $index }}][duration]" value="{{ $workshop->duration }}" placeholder="Duration">
-                                <label>Duration</label>
-                            </div>
-                        </div>
-                        <div class="col-md-1 d-flex align-items-center justify-content-center">
-                            <i class="bi bi-trash remove-achievement"></i>
+                                    <!-- Attendance Record Section -->
+                                    <div class="mb-4">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="section-title mb-0">Attendance Record</h6>
+                                            <button type="button" class="btn btn-primary btn-sm add-row-btn" 
+                                                    onclick="addAttendanceRow({{ $i }})">
+                                                <i class="bi bi-plus-circle me-1"></i>Add Subject
+            </button>
+        </div>
+                                        <div class="table-responsive mt-3">
+                                            <table class="table table-bordered" id="attendance-table-{{ $i }}">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th>Subject</th>
+                                                        <th>Month 1</th>
+                                                        <th>Month 2</th>
+                                                        <th>Month 3</th>
+                                                        <th>Month 4</th>
+                                                        <th>Month 5</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control" name="attendance[{{ $i }}][subject][]"></td>
+                                                        <td><input type="number" class="form-control table-input" name="attendance[{{ $i }}][month1][]" min="0" max="100"></td>
+                                                        <td><input type="number" class="form-control table-input" name="attendance[{{ $i }}][month2][]" min="0" max="100"></td>
+                                                        <td><input type="number" class="form-control table-input" name="attendance[{{ $i }}][month3][]" min="0" max="100"></td>
+                                                        <td><input type="number" class="form-control table-input" name="attendance[{{ $i }}][month4][]" min="0" max="100"></td>
+                                                        <td><input type="number" class="form-control table-input" name="attendance[{{ $i }}][month5][]" min="0" max="100"></td>
+                                                        <td>
+                                                            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                         </div>
                     </div>
                 </div>
-                @endforeach
-            </div>
-            <button type="button" class="add-more-btn mt-2" data-type="workshop" data-semester="{{ $sem }}">
-                <i class="bi bi-plus-circle"></i> Add Workshop
-            </button>
-        </div>
+                            </div>
 
-        <!-- Internships -->
-        <div class="edit-section">
-            <h5 class="section-title"><i class="bi bi-briefcase"></i>Internships</h5>
-            <div class="internships-container">
-                @foreach($internships[$sem] ?? [] as $index => $internship)
-                <div class="achievement-form">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][internships][{{ $index }}][company]" value="{{ $internship->company }}" placeholder="Company Name">
-                                <label>Company Name</label>
+                            <!-- Save Changes Button -->
+                            <div class="text-end mt-4">
+                                <a href="{{ route('user.mentoring') }}" class="btn btn-secondary me-2">
+                                    <i class="bi bi-x-circle me-1"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save me-1"></i>Save Changes
+                                </button>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][internships][{{ $index }}][role]" value="{{ $internship->role }}" placeholder="Role/Position">
-                                <label>Role/Position</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][internships][{{ $index }}][duration]" value="{{ $internship->duration }}" placeholder="Duration">
-                                <label>Duration</label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <textarea class="form-control" name="semesters[{{ $sem }}][internships][{{ $index }}][description]" placeholder="Description" style="height: 100px">{{ $internship->description }}</textarea>
-                                <label>Description</label>
-                            </div>
-                        </div>
-                        <div class="col-md-1 d-flex align-items-center justify-content-center">
-                            <i class="bi bi-trash remove-achievement"></i>
-                        </div>
-                    </div>
+                    @endfor
                 </div>
-                @endforeach
             </div>
-            <button type="button" class="add-more-btn mt-2" data-type="internship" data-semester="{{ $sem }}">
-                <i class="bi bi-plus-circle"></i> Add Internship
-            </button>
-        </div>
-
-        <!-- Challenges/Competitions -->
-        <div class="edit-section">
-            <h5 class="section-title"><i class="bi bi-trophy"></i>Challenges & Competitions</h5>
-            <div class="challenges-container">
-                @foreach($challenges[$sem] ?? [] as $index => $challenge)
-                <div class="achievement-form">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][challenges][{{ $index }}][name]" value="{{ $challenge->name }}" placeholder="Challenge Name">
-                                <label>Challenge Name</label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][challenges][{{ $index }}][organizer]" value="{{ $challenge->organizer }}" placeholder="Organizer">
-                                <label>Organizer</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" name="semesters[{{ $sem }}][challenges][{{ $index }}][result]" value="{{ $challenge->result }}" placeholder="Result">
-                                <label>Result</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-floating">
-                                <input type="date" class="form-control" name="semesters[{{ $sem }}][challenges][{{ $index }}][date]" value="{{ $challenge->date }}">
-                                <label>Date</label>
-                            </div>
-                        </div>
-                        <div class="col-md-1 d-flex align-items-center justify-content-center">
-                            <i class="bi bi-trash remove-achievement"></i>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-            <button type="button" class="add-more-btn mt-2" data-type="challenge" data-semester="{{ $sem }}">
-                <i class="bi bi-plus-circle"></i> Add Challenge
-            </button>
-        </div>
+        </form>
     </div>
-    @endfor
-
-    <button type="submit" class="save-btn">
-        <i class="bi bi-check2-circle"></i> Save All Changes
-    </button>
-</form>
+</div>
 
 @push('scripts')
 <script>
-$(document).ready(function() {
-    let currentSemester = 1;
-    const totalSemesters = 8;
+function addTheoryRow(semester) {
+    const tbody = document.querySelector(`#theory-table-${semester} tbody`);
+    const newRow = tbody.insertRow();
+    newRow.innerHTML = `
+        <td><input type="text" class="form-control" name="theory[${semester}][subject][]"></td>
+        <td><input type="text" class="form-control" name="theory[${semester}][code][]"></td>
+        <td><input type="number" class="form-control table-input" name="theory[${semester}][ca1][]" min="0" max="20"></td>
+        <td><input type="number" class="form-control table-input" name="theory[${semester}][ca2][]" min="0" max="20"></td>
+        <td><input type="number" class="form-control table-input" name="theory[${semester}][ca3][]" min="0" max="20"></td>
+        <td><input type="number" class="form-control table-input" name="theory[${semester}][ca4][]" min="0" max="20"></td>
+        <td>
+            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                <i class="bi bi-trash"></i>
+            </button>
+        </td>
+    `;
+}
 
-    // Navigation between semesters
-    $('.next-sem').click(function() {
-        if (currentSemester < totalSemesters) {
-            $(`[data-semester="${currentSemester}"]`).hide();
-            currentSemester++;
-            $(`[data-semester="${currentSemester}"]`).show();
-            updateNavigation();
-        }
-    });
-
-    $('.prev-sem').click(function() {
-        if (currentSemester > 1) {
-            $(`[data-semester="${currentSemester}"]`).hide();
-            currentSemester--;
-            $(`[data-semester="${currentSemester}"]`).show();
-            updateNavigation();
-        }
-    });
-
-    function updateNavigation() {
-        $('#currentSemester').text(currentSemester);
-        $('.prev-sem').prop('disabled', currentSemester === 1);
-        $('.next-sem').prop('disabled', currentSemester === totalSemesters);
-        $('.progress-bar').css('width', `${(currentSemester/totalSemesters)*100}%`);
-    }
-
-    // Add new items
-    $('.add-more-btn').click(function() {
-        const type = $(this).data('type');
-        const semester = $(this).data('semester');
-        const container = $(this).siblings(`.${type}s-container`);
-        const index = container.children().length;
-        
-        let template = '';
-        switch(type) {
-            case 'subject':
-                template = getSubjectTemplate(semester, index);
-                break;
-            case 'certification':
-                template = getCertificationTemplate(semester, index);
-                break;
-            case 'workshop':
-                template = getWorkshopTemplate(semester, index);
-                break;
-            case 'internship':
-                template = getInternshipTemplate(semester, index);
-                break;
-            case 'challenge':
-                template = getChallengeTemplate(semester, index);
-                break;
-        }
-        
-        container.append(template);
-    });
-
-    // Remove items
-    $(document).on('click', '.remove-achievement', function() {
-        $(this).closest('.achievement-form, .subject-row').fadeOut(300, function() {
-            $(this).remove();
-        });
-    });
-
-    // Form submission
-    $('#mentoringForm').submit(function(e) {
-        e.preventDefault();
-        
-        // Show loading state
-        $('.save-btn').prop('disabled', true).html('<i class="bi bi-hourglass-split"></i> Saving...');
-        
-        $.ajax({
-            url: $(this).attr('action'),
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response.success) {
-                    showNotification('success', 'Changes saved successfully!');
-                    setTimeout(() => {
-                        window.location.href = '{{ route("user.mentoring") }}';
-                    }, 1500);
-                } else {
-                    showNotification('error', 'Error saving changes. Please try again.');
-                    $('.save-btn').prop('disabled', false).html('<i class="bi bi-check2-circle"></i> Save All Changes');
-                }
-            },
-            error: function() {
-                showNotification('error', 'Error saving changes. Please try again.');
-                $('.save-btn').prop('disabled', false).html('<i class="bi bi-check2-circle"></i> Save All Changes');
-            }
-        });
-    });
-
-    function showNotification(type, message) {
-        const toast = `
-            <div class="toast-container position-fixed top-0 end-0 p-3">
-                <div class="toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                </div>
-            </div>
+function addPracticalRow(semester) {
+    const tbody = document.querySelector(`#practical-table-${semester} tbody`);
+    const newRow = tbody.insertRow();
+    newRow.innerHTML = `
+        <td><input type="text" class="form-control" name="practical[${semester}][subject][]"></td>
+        <td><input type="text" class="form-control" name="practical[${semester}][code][]"></td>
+        <td><input type="number" class="form-control table-input" name="practical[${semester}][pca1][]" min="0" max="50"></td>
+        <td><input type="number" class="form-control table-input" name="practical[${semester}][pca2][]" min="0" max="50"></td>
+        <td>
+            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                <i class="bi bi-trash"></i>
+            </button>
+        </td>
         `;
-        
-        $(toast).appendTo('body').find('.toast').toast('show');
-    }
+}
 
-    // Template generators
-    function getSubjectTemplate(semester, index) {
-        return `
-            <div class="subject-row">
-                <div class="row align-items-center">
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="semesters[${semester}][subjects][${index}][name]" placeholder="Subject Name" required>
-                            <label>Subject Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="semesters[${semester}][subjects][${index}][code]" placeholder="Subject Code">
-                            <label>Code</label>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-floating">
-                            <select class="form-select grade-select" name="semesters[${semester}][subjects][${index}][grade]">
-                                <option value="">Select</option>
+function addSemesterRow(semester) {
+    const tbody = document.querySelector(`#semester-table-${semester} tbody`);
+    const newRow = tbody.insertRow();
+    newRow.innerHTML = `
+        <td><input type="text" class="form-control" name="semester[${semester}][code][]"></td>
+        <td><input type="text" class="form-control" name="semester[${semester}][subject][]"></td>
+        <td>
+            <select class="form-select" name="semester[${semester}][grade][]">
+                <option value="">Select Grade</option>
                                 <option value="O">O</option>
                                 <option value="E">E</option>
                                 <option value="A">A</option>
@@ -496,54 +346,46 @@ $(document).ready(function() {
                                 <option value="D">D</option>
                                 <option value="F">F</option>
                             </select>
-                            <label>Grade</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="semesters[${semester}][subjects][${index}][remarks]" placeholder="Remarks">
-                            <label>Remarks</label>
-                        </div>
-                    </div>
-                    <div class="col-md-1 text-center">
-                        <i class="bi bi-trash remove-achievement"></i>
-                    </div>
-                </div>
-            </div>
+        </td>
+        <td><input type="number" class="form-control table-input" name="semester[${semester}][points][]" min="0" max="10"></td>
+        <td><input type="number" class="form-control table-input" name="semester[${semester}][credit][]" step="0.5" min="0"></td>
+        <td>
+            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                <i class="bi bi-trash"></i>
+            </button>
+        </td>
         `;
     }
 
-    function getCertificationTemplate(semester, index) {
-        return `
-            <div class="achievement-form">
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="semesters[${semester}][certifications][${index}][title]" placeholder="Certificate Title" required>
-                            <label>Certificate Title</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" name="semesters[${semester}][certifications][${index}][issuer]" placeholder="Issuing Organization">
-                            <label>Issuing Organization</label>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-floating">
-                            <input type="date" class="form-control" name="semesters[${semester}][certifications][${index}][completion_date]">
-                            <label>Completion Date</label>
-                        </div>
-                    </div>
-                    <div class="col-md-1 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-trash remove-achievement"></i>
-                    </div>
-                </div>
-            </div>
-        `;
+function addAttendanceRow(semester) {
+    const tbody = document.querySelector(`#attendance-table-${semester} tbody`);
+    const newRow = tbody.insertRow();
+    newRow.innerHTML = `
+        <td><input type="text" class="form-control" name="attendance[${semester}][subject][]"></td>
+        <td><input type="number" class="form-control table-input" name="attendance[${semester}][month1][]" min="0" max="100"></td>
+        <td><input type="number" class="form-control table-input" name="attendance[${semester}][month2][]" min="0" max="100"></td>
+        <td><input type="number" class="form-control table-input" name="attendance[${semester}][month3][]" min="0" max="100"></td>
+        <td><input type="number" class="form-control table-input" name="attendance[${semester}][month4][]" min="0" max="100"></td>
+        <td><input type="number" class="form-control table-input" name="attendance[${semester}][month5][]" min="0" max="100"></td>
+        <td>
+            <button type="button" class="remove-row-btn" onclick="removeRow(this)">
+                <i class="bi bi-trash"></i>
+            </button>
+        </td>
+    `;
+}
+
+function removeRow(button) {
+    const row = button.closest('tr');
+    row.remove();
     }
 
-    // Similar template generators for workshops, internships, and challenges...
+$(document).ready(function() {
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
 });
 </script>
 @endpush

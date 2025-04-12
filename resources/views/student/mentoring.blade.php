@@ -223,102 +223,7 @@
             </ul>
 
             <div class="main-tab-content">
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="card h-100">
-                            <div class="card-header bg-light">
-                                <h6 class="mb-0"><i class="bi bi-person me-2"></i>Personal Information</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="detail-row">
-                                    <div class="detail-label">Student Name</div>
-                                    <div class="detail-value">{{ $student->name ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Course Name</div>
-                                    <div class="detail-value">{{ $student->department_name ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Current Semester</div>
-                                    <div class="detail-value">{{ $student->current_semester ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Session</div>
-                                    <div class="detail-value">{{ $student->session ?? '2023-2024' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Mentor Name</div>
-                                    <div class="detail-value">{{ isset($mentor) ? ($mentor->mentor_name ?? 'Not Assigned') : 'Not Assigned' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Registration No</div>
-                                    <div class="detail-value">{{ $student->reg_no ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Roll No</div>
-                                    <div class="detail-value">{{ $student->roll_no ?? 'Not Available' }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100">
-                            <div class="card-header bg-light">
-                                <h6 class="mb-0"><i class="bi bi-info-circle me-2"></i>Contact & Health Information</h6>
-                            </div>
-                            <div class="card-body">
-                                <div class="detail-row">
-                                    <div class="detail-label">Mobile Number</div>
-                                    <div class="detail-value">{{ $student->contact ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Email ID</div>
-                                    <div class="detail-value">{{ $student->email ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Guardian Name</div>
-                                    <div class="detail-value">{{ $student->guardian_name ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Guardian Contact</div>
-                                    <div class="detail-value">{{ $student->guardian_contact ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Blood Group</div>
-                                    <div class="detail-value">{{ $student->blood_group ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Height</div>
-                                    <div class="detail-value">{{ $student->height ?? 'Not Available' }}</div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Spectacles</div>
-                                    <div class="detail-value">
-                                        <span class="badge {{ isset($student->spectacles) && $student->spectacles == 'Yes' ? 'badge-yes' : 'badge-no' }}">
-                                            {{ isset($student->spectacles) ? $student->spectacles : 'No' }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Physical Disabilities</div>
-                                    <div class="detail-value">
-                                        <span class="badge {{ isset($student->physical_disabilities) && $student->physical_disabilities == 'Yes' ? 'badge-yes' : 'badge-no' }}">
-                                            {{ isset($student->physical_disabilities) ? $student->physical_disabilities : 'No' }}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="detail-row">
-                                    <div class="detail-label">Mental Health</div>
-                                    <div class="detail-value">
-                                        <span class="badge {{ isset($student->mental_health) && $student->mental_health == 'Yes' ? 'badge-yes' : 'badge-no' }}">
-                                            {{ isset($student->mental_health) ? $student->mental_health : 'Good' }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="tab-content" id="mainTabsContent">
                     <!-- Semester 1 Tab Content -->
@@ -349,7 +254,7 @@
                                                 <!-- Semester 1 Theory Subjects -->
                                                 <tr>
                                                     <td>Basic Electronics</td>
-                                                    <td><span class="badge bg-secondary">BEC101</span></td>
+                                                    <td>BEC101</td>
                                                     <td>18</td>
                                                     <td>16</td>
                                                     <td>19</td>
@@ -358,7 +263,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Programming Fundamentals</td>
-                                                    <td><span class="badge bg-secondary">CSC101</span></td>
+                                                    <td>CSC101</td>
                                                     <td>15</td>
                                                     <td>17</td>
                                                     <td>14</td>
@@ -367,7 +272,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Mathematics I</td>
-                                                    <td><span class="badge bg-secondary">MAT101</span></td>
+                                                    <td>MAT101</td>
                                                     <td>19</td>
                                                     <td>18</td>
                                                     <td>17</td>
@@ -397,14 +302,14 @@
                                                 <!-- Semester 1 Practical Subjects -->
                                                 <tr>
                                                     <td>Basic Electronics Lab</td>
-                                                    <td><span class="badge bg-secondary">BECP101</span></td>
+                                                    <td>BECP101</td>
                                                     <td>42</td>
                                                     <td>45</td>
                                                     <td><strong>43.5</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Programming Lab</td>
-                                                    <td><span class="badge bg-secondary">CSCP101</span></td>
+                                                    <td>CSCP101</td>
                                                     <td>38</td>
                                                     <td>44</td>
                                                     <td><strong>41</strong></td>
@@ -412,6 +317,82 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+
+                                <!-- Semester Marks Table -->
+                                <div class="table-responsive mt-4">
+                                    <h6 class="border-bottom pb-2 mb-3">Semester Marks</h6>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 120px;">Subject Code</th>
+                                                <th>Subjects Offered</th>
+                                                <th style="width: 100px;">Letter Grade</th>
+                                                <th style="width: 80px;">Points</th>
+                                                <th style="width: 80px;">Credit</th>
+                                                <th style="width: 100px;">Credit Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>BCAC501</td>
+                                                <td>Internet Technology</td>
+                                                <td>B</td>
+                                                <td>7</td>
+                                                <td>4.0</td>
+                                                <td>28</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAC591</td>
+                                                <td>Internet Technology Lab</td>
+                                                <td>O</td>
+                                                <td>10</td>
+                                                <td>2.0</td>
+                                                <td>20</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAC502</td>
+                                                <td>Computer Networking</td>
+                                                <td>A</td>
+                                                <td>8</td>
+                                                <td>4.0</td>
+                                                <td>32</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAC592</td>
+                                                <td>Computer Networking Lab</td>
+                                                <td>O</td>
+                                                <td>10</td>
+                                                <td>2.0</td>
+                                                <td>20</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAD501A</td>
+                                                <td>Cloud Computing</td>
+                                                <td>E</td>
+                                                <td>9</td>
+                                                <td>6.0</td>
+                                                <td>54</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAD581</td>
+                                                <td>Industrial Training & Minor Project</td>
+                                                <td>O</td>
+                                                <td>10</td>
+                                                <td>6.0</td>
+                                                <td>60</td>
+                                            </tr>
+                                            <tr class="fw-bold">
+                                                <td colspan="4" class="text-end">Total</td>
+                                                <td>24</td>
+                                                <td>214</td>
+                                            </tr>
+                                            <tr class="table-light">
+                                                <td colspan="5" class="text-end fw-bold">SGPA</td>
+                                                <td class="fw-bold">8.92</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 <!-- Attendance Record Section (Odd Semester) -->
@@ -784,7 +765,7 @@
                                                 <!-- Semester 2 Theory Subjects -->
                                                 <tr>
                                                     <td>Data Structures</td>
-                                                    <td><span class="badge bg-secondary">CSC201</span></td>
+                                                    <td>CSC201</td>
                                                     <td>18</td>
                                                     <td>16</td>
                                                     <td>19</td>
@@ -793,7 +774,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Digital Electronics</td>
-                                                    <td><span class="badge bg-secondary">BEC201</span></td>
+                                                    <td>BEC201</td>
                                                     <td>15</td>
                                                     <td>17</td>
                                                     <td>14</td>
@@ -802,7 +783,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Mathematics II</td>
-                                                    <td><span class="badge bg-secondary">MAT201</span></td>
+                                                    <td>MAT201</td>
                                                     <td>19</td>
                                                     <td>18</td>
                                                     <td>17</td>
@@ -832,14 +813,14 @@
                                                 <!-- Semester 2 Practical Subjects -->
                                                 <tr>
                                                     <td>Data Structures Lab</td>
-                                                    <td><span class="badge bg-secondary">CSCP201</span></td>
+                                                    <td>CSCP201</td>
                                                     <td>42</td>
                                                     <td>45</td>
                                                     <td><strong>43.5</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Digital Electronics Lab</td>
-                                                    <td><span class="badge bg-secondary">BECP201</span></td>
+                                                    <td>BECP201</td>
                                                     <td>38</td>
                                                     <td>44</td>
                                                     <td><strong>41</strong></td>
@@ -847,6 +828,82 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+
+                                <!-- Semester Marks Table -->
+                                <div class="table-responsive mt-4">
+                                    <h6 class="border-bottom pb-2 mb-3">Semester Marks</h6>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 120px;">Subject Code</th>
+                                                <th>Subjects Offered</th>
+                                                <th style="width: 100px;">Letter Grade</th>
+                                                <th style="width: 80px;">Points</th>
+                                                <th style="width: 80px;">Credit</th>
+                                                <th style="width: 100px;">Credit Points</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>BCAC501</td>
+                                                <td>Internet Technology</td>
+                                                <td>B</td>
+                                                <td>7</td>
+                                                <td>4.0</td>
+                                                <td>28</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAC591</td>
+                                                <td>Internet Technology Lab</td>
+                                                <td>O</td>
+                                                <td>10</td>
+                                                <td>2.0</td>
+                                                <td>20</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAC502</td>
+                                                <td>Computer Networking</td>
+                                                <td>A</td>
+                                                <td>8</td>
+                                                <td>4.0</td>
+                                                <td>32</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAC592</td>
+                                                <td>Computer Networking Lab</td>
+                                                <td>O</td>
+                                                <td>10</td>
+                                                <td>2.0</td>
+                                                <td>20</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAD501A</td>
+                                                <td>Cloud Computing</td>
+                                                <td>E</td>
+                                                <td>9</td>
+                                                <td>6.0</td>
+                                                <td>54</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BCAD581</td>
+                                                <td>Industrial Training & Minor Project</td>
+                                                <td>O</td>
+                                                <td>10</td>
+                                                <td>6.0</td>
+                                                <td>60</td>
+                                            </tr>
+                                            <tr class="fw-bold">
+                                                <td colspan="4" class="text-end">Total</td>
+                                                <td>24</td>
+                                                <td>214</td>
+                                            </tr>
+                                            <tr class="table-light">
+                                                <td colspan="5" class="text-end fw-bold">SGPA</td>
+                                                <td class="fw-bold">8.92</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 <!-- Attendance Record Section (Even Semester) -->
@@ -941,7 +998,8 @@
                                 </div>
                             </div>
                         </div>
-<!-- Communication Section -->
+
+                        <!-- Communication Section -->
                         <div class="card mb-4">
                             <div class="card-header bg-light">
                                 <h5 class="mb-0"><i class="bi bi-chat-dots me-2"></i>Communication Pattern</h5>
@@ -1037,6 +1095,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- Career Development Section -->
                         <div class="card mb-4">
                             <div class="card-header bg-light">

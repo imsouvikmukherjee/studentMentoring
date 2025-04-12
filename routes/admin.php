@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth','isStudent')->group(function () {
 Route::get('/admin/dashboard',[DashboardController::class,'adminDashboard'])->name('admin_dashboard');
-Route::get('/admin/department',[DepartmentController::class,'department'])->name('department');
-Route::get('/admin/add-department',[DepartmentController::class,'addDepartment'])->name('add_department');
-Route::post('/admin/add-department-store',[DepartmentController::class,'addDepartmentStore'])->name('add_department_store');
-
-Route::get('/delete-department/{id}', [DepartmentController::class, 'destroy']);
+// Comment out the old department routes
+// Route::get('/admin/department',[DepartmentController::class,'department'])->name('department');
+// Route::get('/admin/add-department',[DepartmentController::class,'addDepartment'])->name('add_department');
+// Route::post('/admin/add-department-store',[DepartmentController::class,'addDepartmentStore'])->name('add_department_store');
+// Route::get('/delete-department/{id}', [DepartmentController::class, 'destroy']);
 
 Route::get('/admin/subjects',[SubjectController::class,'subject'])->name('subject');
 Route::get('/admin/add-subject',[SubjectController::class,'addSubject'])->name('add_subject');

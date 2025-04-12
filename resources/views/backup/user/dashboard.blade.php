@@ -16,12 +16,12 @@
 
 <!-- Welcome Message -->
 @if(session()->has('login_success'))
-<div class="alert border-0 border-start border-5 border-success alert-dismissible fade show py-2 welcome-alert">
+<div class="alert bg-success alert-dismissible fade show py-2 welcome-alert">
     <div class="d-flex align-items-center">
-        <div class="font-35 text-success"><i class="bx bx-info-circle"></i></div>
+        <div class="font-35 text-white"><i class="bx bx-check-circle"></i></div>
         <div class="ms-3">
-            <h6 class="mb-0 text-success">Welcome back, {{ Auth::user()->name }}!</h6>
-            <div>We're glad to see you again.</div>
+            <h6 class="mb-0 text-white">Welcome back, {{ Auth::user()->name }}!</h6>
+            <div class="text-white">We're glad to see you again.</div>
         </div>
     </div>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

@@ -112,14 +112,21 @@ class DashboardController extends Controller
                 $pendingRequest = ProfileChangeRequest::where('user_id', $user_id)
                     ->where('status', 'pending')
                     ->first();
+
+                // Get all change requests for the user
+                $changeRequests = ProfileChangeRequest::where('user_id', $user_id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
             } else {
                 Log::warning('profile_change_requests table does not exist');
+                $changeRequests = collect([]);
             }
         } catch (\Exception $e) {
             Log::error('Error querying profile_change_requests: ' . $e->getMessage());
+            $changeRequests = collect([]);
         }
 
-        return view('student.edit-profile', compact('student', 'pendingRequest'));
+        return view('student.edit-profile', compact('student', 'pendingRequest', 'changeRequests'));
     }
 
     public function updateProfile(Request $request){
